@@ -1,0 +1,10 @@
+register:
+  image: yourdockerhub/register-service:latest
+view:
+  image: yourdockerhub/view-service:latest
+mysql:
+  image: mysql:8.0
+  rootPassword: rootpass
+  user: user
+  password: password
+  db: appdb

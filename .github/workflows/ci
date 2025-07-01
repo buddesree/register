@@ -1,0 +1,32 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: docker.io
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        run: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+
+      - name: Build and Push Register Service
+        run: |
+          docker build -t $REGISTRY/${{ secrets.DOCKER_USERNAME }}/register-service ./register-service
+          docker push $REGISTRY/${{ secrets.DOCKER_USERNAME }}/register-service
+
+      - name: Build and Push View Service
+        run: |
+          docker build -t $REGISTRY/${{ secrets.DOCKER_USERNAME }}/view-service ./view-service
+          docker push $REGISTRY/${{ secrets.DOCKER_USERNAME }}/view-service

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: view
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: view
+  template:
+    metadata:
+      labels:
+        app: view
+    spec:
+      containers:
+        - name: view
+          image: {{ .Values.view.image }}
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              value: "mysql+pymysql://user:password@mysql:3306/appdb"

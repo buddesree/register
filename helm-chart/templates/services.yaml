@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: register
+spec:
+  selector:
+    app: register
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: view
+spec:
+  selector:
+    app: view
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
